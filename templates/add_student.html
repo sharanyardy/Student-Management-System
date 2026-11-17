@@ -1,0 +1,108 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Student</title>
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #f0fdf4;
+            color: #1e293b;
+            padding: 40px 15px;
+        }
+        h1 {
+            text-align: center;
+            color: #15803d;
+            margin-bottom: 25px;
+            font-size: 26px;
+        }
+        form {
+            width: 480px;
+            max-width: 100%;
+            margin: auto;
+            padding: 30px;
+            background-color: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 18px rgba(0,0,0,0.06);
+            border: 1px solid #dcfce7;
+        }
+        .field-group {
+            margin-bottom: 15px;
+        }
+        label {
+            display: block;
+            font-size: 13px;
+            font-weight: bold;
+            color: #334155;
+            margin-bottom: 6px;
+        }
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border: 1px solid #cbd5e1;
+            border-radius: 6px;
+            outline: none;
+            font-size: 14px;
+            background-color: #f8fafc;
+        }
+        input:focus, select:focus {
+            border-color: #16a34a;
+            background-color: white;
+            box-shadow: 0 0 4px rgba(22,163,74,0.2);
+        }
+        button {
+            width: 100%;
+            padding: 12px;
+            background-color: #16a34a;
+            color: white;
+            border: none;
+            border-radius: 7px;
+            font-size: 15px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: 0.3s;
+            margin-top: 10px;
+        }
+        button:hover { background-color: #15803d; }
+    </style>
+</head>
+<body>
+    <h1>ADD STUDENT INFO</h1>
+    <form action="/student/add" method="post">
+        <div class="field-group">
+            <label>NAME:</label>
+            <input type="text" name="name" required minlength="5" maxlength="25">
+        </div>
+        <div class="field-group">
+            <label>AGE:</label>
+            <input type="number" name="age" required min="18" max="35">
+        </div>
+        <div class="field-group">
+            <label>GENDER:</label>
+            <input type="text" name="gender" required>
+        </div>
+        <div class="field-group">
+            <label>MARKS:</label>
+            <input type="number" name="marks" required min="35" max="100">
+        </div>
+        <div class="field-group">
+            <label>COURSE:</label>
+            <input type="text" name="course" required>
+        </div>
+        <div class="field-group">
+            <label>IMAGE URL:</label>
+            <input type="text" name="image" placeholder="https://example.com/photo.jpg">
+        </div>
+        <div class="field-group">
+            <label>ATTENDANCE STATUS:</label>
+            <select name="status">
+                <option value="1">Present</option>
+                <option value="0">Absent</option>
+            </select>
+        </div>
+        <button type="submit">Submit</button>
+    </form>
+</body>
+</html>

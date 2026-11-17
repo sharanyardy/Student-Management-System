@@ -1,0 +1,224 @@
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Student Management System</title>
+
+<style>
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    background: #f4f6fc;
+    color: #26334d;
+}
+
+.header {
+    background: linear-gradient(120deg, #312e81, #6366f1);
+    padding: 25px 5%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 15px;
+    color: white;
+}
+
+.header h1 {
+    font-size: 25px;
+}
+
+.add {
+    background: white;
+    color: #4f46e5;
+    padding: 12px 20px;
+    border-radius: 8px;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.container {
+    width: 92%;
+    margin: 35px auto;
+    display: grid;
+    grid-template-columns: repeat(4, 1fr);
+    gap: 25px;
+}
+
+.card {
+    background: white;
+    border-radius: 15px;
+    padding: 25px 18px;
+    text-align: center;
+    box-shadow: 0 5px 20px rgba(0,0,0,0.07);
+    transition: 0.3s;
+}
+
+.card:hover {
+    transform: translateY(-7px);
+    box-shadow: 0 10px 25px rgba(79,70,229,0.15);
+}
+
+.card img {
+    width: 115px;
+    height: 115px;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 5px solid #e0e7ff;
+    margin-bottom: 15px;
+}
+
+.content h2 {
+    color: #3730a3;
+    font-size: 20px;
+    margin-bottom: 12px;
+}
+
+.content p {
+    color: #13161a;
+    font-size: 14px;
+    margin: 9px 0;
+}
+
+.present, .absent {
+    display: inline-block;
+    padding: 7px 15px;
+    border-radius: 20px;
+    font-weight: bold;
+    font-size: 12px;
+    margin-top: 10px;
+}
+
+.card img {
+    width: 100%;
+    height: 180px;
+    object-fit: contain; 
+    background: #f8fafc;  /* Fills empty space gracefully */
+}
+.present {
+    color: #15803d;
+    background: #dcfce7;
+}
+
+.absent {
+    color: #dc2626;
+    background: #fee2e2;
+}
+
+.actions {
+    display: flex;
+    gap: 7px;
+    margin-top: 18px;
+}
+
+.actions a, .actions button {
+    flex: 1;
+    padding: 9px 5px;
+    border: none;
+    border-radius: 6px;
+    text-decoration: none;
+    color: white;
+    font-size: 12px;
+    cursor: pointer;
+}
+
+.view {
+    background: #6366f1;
+}
+
+.update {
+    background: #0891b2;
+}
+
+.delete {
+    background: #ef4444;
+}
+
+.actions form {
+    flex: 1;
+}
+
+@media(max-width: 1000px) {
+    .container {
+        grid-template-columns: repeat(3, 1fr);
+    }
+}
+
+@media(max-width: 700px) {
+    .container {
+        grid-template-columns: repeat(2, 1fr);
+    }
+}
+
+@media(max-width: 480px) {
+    .container {
+        grid-template-columns: 1fr;
+    }
+
+    .header {
+        justify-content: center;
+        text-align: center;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<div class="header">
+    <h1>STUDENT MANAGEMENT SYSTEM</h1>
+    <a href="/student/add" class="add">+ Add Student</a>
+</div>
+
+<div class="container">
+
+{% for std in stds %}
+
+<div class="card">
+
+    <img src="{{ std[6] or 'https://via.placeholder.com/150' }}"
+         alt="Student Image">
+
+    <div class="content">
+
+        <h2>{{ std[1] }}</h2>
+
+        <p>Age: {{ std[2] }}</p>
+        <p>Gender: {{ std[3] }}</p>
+        <p>Marks: {{ std[4] }}</p>
+        <p>Course: {{ std[5] }}</p>
+
+        {% if std[7] %}
+        <span class="present">Present</span>
+        {% else %}
+        <span class="absent">Absent</span>
+        {% endif %}
+
+        <div class="actions">
+
+            <a href="/students/{{ std[0] }}" class="view">View</a>
+
+            <a href="/students/edit/{{ std[0] }}" class="update">Edit</a>
+
+            <form action="/std/delete/{{ std[0] }}" method="post"
+                  onsubmit="return confirm('Delete this student?')">
+                <button class="delete">Delete</button>
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+{% endfor %}
+
+</div>
+
+</body>
+</html>
