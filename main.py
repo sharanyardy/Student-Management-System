@@ -1,4 +1,4 @@
-from fastapi import FastAPI, Request, Form, HTTPException
+from fastapi import FastAPI, Request, Form
 from fastapi.templating import Jinja2Templates
 from pydantic import BaseModel, Field
 from fastapi.responses import RedirectResponse
@@ -87,6 +87,45 @@ def send_std_form(req: Request):
         request=req,
         name="add_student.html",
         context={}
+    )
+
+@app.get("/students/{std_id}")
+def single_std(req: Request, std_id: int):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM students WHERE id=?", (std_id,))
+    student = cursor.fetchone()
+    connection.close()
+
+    # If student doesn't exist, redirect back home instead of raising an exception
+    if student is None:
+        return RedirectResponse("/", status_code=303)
+
+    return templates.TemplateResponse(
+        request=req,
+        name="single_std.html",
+        context={"std": student}
+    )
+
+@app.get("/students/edit/{std_id}")
+def edit_std(req: Request, std_id: int):
+    connection = get_connection()
+    cursor = connection.cursor()
+    cursor.execute("SELECT * FROM students WHERE id=?", (std_id,))
+    student = cursor.fetchone()
+    connection.close()
+
+    # If student doesn't exist, redirect back home
+    if student is None:
+        return RedirectResponse("/", status_code=303)
+
+    return templates.TemplateResponse(
+        request=req,
+        name="edit_std.html",
+        context={
+            "std": student,
+            "std_id": std_id
+        }
     )
 
 @app.post("/student/add")
